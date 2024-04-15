@@ -3,6 +3,8 @@ import CartContext from "./createContext";
 const ContextProvider = (props) => {
   const [list, setList] = React.useState([]);
   const apiUrl = "https://react-project-ftshekhar-default-rtdb.europe-west1.firebasedatabase.app/notes.json";
+  const  [itemFound, setItemFound] = React.useState([]);
+  
   useEffect(() => {
     fetch(apiUrl)
     .then(response => {
@@ -54,9 +56,9 @@ const ContextProvider = (props) => {
   };
 
 const searchItemHandler = (item) => {
-  console.log(item)
+  console.log(item);
   const newList = list.filter((item1) => item1.title === item);
-  setList(newList);
+  setItemFound(newList);
 }
 
   const contextCart = {
@@ -64,6 +66,7 @@ const searchItemHandler = (item) => {
     addItem: addItemHandler,
     removeItem: removeItemHandler,
     searchItem: searchItemHandler,
+    searchTotalItems: itemFound,
   };
   return <CartContext.Provider value={contextCart}> {props.children}</CartContext.Provider>;
 };
